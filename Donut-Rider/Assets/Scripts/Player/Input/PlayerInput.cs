@@ -78,6 +78,65 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Donut"",
+            ""id"": ""cf985a57-c77c-4b5d-a56e-6f04df405c80"",
+            ""actions"": [
+                {
+                    ""name"": ""Thrust"",
+                    ""type"": ""Button"",
+                    ""id"": ""3c7f700d-efd4-4640-a36b-17fda1cb47a6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Brake"",
+                    ""type"": ""Button"",
+                    ""id"": ""290750fe-91e9-4dc9-b75a-d3750a80d37c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""22bda10f-b7cc-42c0-b459-7d6ed2125915"",
+                    ""path"": ""1DAxis(minValue=0)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Thrust"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Positive"",
+                    ""id"": ""99b8ad29-f21b-4429-b945-e6f135f00653"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Thrust"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b4cad66b-3116-473f-bbdf-4644d5a5e332"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Brake"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -88,6 +147,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         // Tests
         m_Tests = asset.FindActionMap("Tests", throwIfNotFound: true);
         m_Tests_TestMe = m_Tests.FindAction("TestMe", throwIfNotFound: true);
+        // Donut
+        m_Donut = asset.FindActionMap("Donut", throwIfNotFound: true);
+        m_Donut_Thrust = m_Donut.FindAction("Thrust", throwIfNotFound: true);
+        m_Donut_Brake = m_Donut.FindAction("Brake", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -209,6 +272,47 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public TestsActions @Tests => new TestsActions(this);
+
+    // Donut
+    private readonly InputActionMap m_Donut;
+    private IDonutActions m_DonutActionsCallbackInterface;
+    private readonly InputAction m_Donut_Thrust;
+    private readonly InputAction m_Donut_Brake;
+    public struct DonutActions
+    {
+        private @PlayerInput m_Wrapper;
+        public DonutActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Thrust => m_Wrapper.m_Donut_Thrust;
+        public InputAction @Brake => m_Wrapper.m_Donut_Brake;
+        public InputActionMap Get() { return m_Wrapper.m_Donut; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DonutActions set) { return set.Get(); }
+        public void SetCallbacks(IDonutActions instance)
+        {
+            if (m_Wrapper.m_DonutActionsCallbackInterface != null)
+            {
+                @Thrust.started -= m_Wrapper.m_DonutActionsCallbackInterface.OnThrust;
+                @Thrust.performed -= m_Wrapper.m_DonutActionsCallbackInterface.OnThrust;
+                @Thrust.canceled -= m_Wrapper.m_DonutActionsCallbackInterface.OnThrust;
+                @Brake.started -= m_Wrapper.m_DonutActionsCallbackInterface.OnBrake;
+                @Brake.performed -= m_Wrapper.m_DonutActionsCallbackInterface.OnBrake;
+                @Brake.canceled -= m_Wrapper.m_DonutActionsCallbackInterface.OnBrake;
+            }
+            m_Wrapper.m_DonutActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Thrust.started += instance.OnThrust;
+                @Thrust.performed += instance.OnThrust;
+                @Thrust.canceled += instance.OnThrust;
+                @Brake.started += instance.OnBrake;
+                @Brake.performed += instance.OnBrake;
+                @Brake.canceled += instance.OnBrake;
+            }
+        }
+    }
+    public DonutActions @Donut => new DonutActions(this);
     public interface IGlobalActions
     {
         void OnSwitchTestInputs(InputAction.CallbackContext context);
@@ -216,5 +320,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     public interface ITestsActions
     {
         void OnTestMe(InputAction.CallbackContext context);
+    }
+    public interface IDonutActions
+    {
+        void OnThrust(InputAction.CallbackContext context);
+        void OnBrake(InputAction.CallbackContext context);
     }
 }
