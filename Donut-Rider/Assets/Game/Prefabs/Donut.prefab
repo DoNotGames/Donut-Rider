@@ -14,7 +14,9 @@ GameObject:
   - component: {fileID: 4651992486746705831}
   - component: {fileID: 2508642962826283484}
   - component: {fileID: 5882329341136265349}
+  - component: {fileID: 1669727477998852971}
   - component: {fileID: 8855725483182479498}
+  - component: {fileID: 8759808177651109286}
   m_Layer: 0
   m_Name: Donut
   m_TagString: Untagged
@@ -109,9 +111,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 767792767194814745}
   serializedVersion: 2
-  m_Mass: 0.05
-  m_Drag: 1
-  m_AngularDrag: 0.4
+  m_Mass: 0.12
+  m_Drag: 0.7
+  m_AngularDrag: 0.2
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -188,6 +190,18 @@ MonoBehaviour:
   m_DefaultActionMap: Donut
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1669727477998852971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767792767194814745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e14ba4bec419bb048b2cb34aa13e6b29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8855725483182479498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,5 +214,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc3abc5988d6fdd40a30b1146bebb43a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 1.2
   brakePower: 4
+--- !u!114 &8759808177651109286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767792767194814745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c444e33ab41bb6a488fb3f331e0ebf64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
