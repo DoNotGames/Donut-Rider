@@ -3,7 +3,6 @@ using UnityEngine;
 public class Donut : MonoBehaviour
 {
     private HPComponent hpComponent;
-    private DonutController donutController;
 
     public delegate void OnGameOver();
     public event OnGameOver onGameOver;
@@ -14,7 +13,6 @@ public class Donut : MonoBehaviour
     Donut()
     {
         hpComponent = null;
-        donutController = null;
     }
 
     private void Awake()
@@ -23,12 +21,6 @@ public class Donut : MonoBehaviour
         if(hpComponent == null) 
         {
             Debug.LogWarning("HPComponent is not valid");
-        }
-
-        donutController = GetComponent<DonutController>();
-        if (donutController == null)
-        {
-            Debug.LogWarning("DonutController is not valid");
         }
     }
 
