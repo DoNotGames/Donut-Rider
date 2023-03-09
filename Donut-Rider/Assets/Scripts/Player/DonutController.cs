@@ -1,45 +1,82 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class DonutController : MonoBehaviour
 {
-    [SerializeField] public static DonutController Instance;
-    [SerializeField] private Rigidbody DonutRigidbody;
-    [SerializeField] private bool MoveRight = false;
-    [SerializeField] private bool MoveLeft = false;
-    [SerializeField] public bool CanMove = true;
-    [SerializeField] private float DonutSpeed = 2f;
+    [SerializeField] private float speed;
+    [SerializeField] private float brakePower;
+    [SerializeField] private float minSpeed;
+
+    private Rigidbody donutRigidbody;
+    private Vector3 force;
+    private float dragBase;
+
+    private Donut donut;
+
+    DonutController()
+    {
+        speed = 1f;
+        brakePower = 4f;
+        minSpeed = 0.02f;
+        donutRigidbody = null;
+        force = Vector3.zero;
+    }
 
     private void Awake()
     {
-        DonutRigidbody = GetComponent<Rigidbody>();
+        donutRigidbody = GetComponent<Rigidbody>();
+        if (donutRigidbody == null)
+        {
+            Debug.LogWarning("DonutRigidbody is not valid");
+        }
+
+        dragBase = donutRigidbody.drag;
+        donutRigidbody.AddForce(Vector3.right * speed);
+
+        donut = GetComponent<Donut>();
+        if (donut == null)
+        {
+            Debug.LogWarning("Donut is not valid");
+        }
     }
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.A)) //Strefe left
+        if (donutRigidbody.velocity.magnitude <= minSpeed)
         {
-            MoveLeft = true;
-        } else { MoveLeft = false; }
-        if (Input.GetKey(KeyCode.D)) //Strefe right
-        {
-            MoveRight = true;
+            donut.GameOver();
         }
-        else { MoveRight = false; }
     }
 
     private void FixedUpdate()
     {
-        if (MoveLeft == true && CanMove == true)
+        if (force != Vector3.zero)
         {
-            DonutRigidbody.AddForce(-transform.right * DonutSpeed * Time.fixedDeltaTime * 50f, ForceMode.Acceleration);
-            Debug.Log("Left");
+            donutRigidbody.AddForce(force);
         }
-        if (MoveRight == true && CanMove == true)
+    }
+
+    public void Thrust(InputAction.CallbackContext context)
+    {
+        force = Vector3.zero;
+        force += Vector3.right * context.ReadValue<float>() * speed;
+    }
+
+    public void Brake(InputAction.CallbackContext context)
+    {
+        switch(context.phase)
         {
-            DonutRigidbody.AddForce(transform.right * DonutSpeed * Time.fixedDeltaTime * 50f, ForceMode.Acceleration);
-            Debug.Log("Right");
+            case InputActionPhase.Started:
+                {
+                    donutRigidbody.drag = brakePower;
+                    break;
+                }
+
+            case InputActionPhase.Canceled:
+                {
+                    donutRigidbody.drag = dragBase;
+                    break;
+                }
         }
     }
 }
