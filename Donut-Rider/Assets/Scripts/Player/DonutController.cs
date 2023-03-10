@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class DonutController : MonoBehaviour
 {
@@ -13,17 +12,14 @@ public class DonutController : MonoBehaviour
 
     private Donut donut;
 
-    DonutController()
+    private void Awake()
     {
         speed = 1f;
         brakePower = 4f;
         minSpeed = 0.02f;
         donutRigidbody = null;
         force = Vector3.zero;
-    }
 
-    private void Awake()
-    {
         donutRigidbody = GetComponent<Rigidbody>();
         if (donutRigidbody == null)
         {
