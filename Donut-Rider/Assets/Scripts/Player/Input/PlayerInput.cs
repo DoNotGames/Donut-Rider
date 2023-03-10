@@ -93,7 +93,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Brake"",
+                    ""name"": ""Breake"",
                     ""type"": ""Button"",
                     ""id"": ""290750fe-91e9-4dc9-b75a-d3750a80d37c"",
                     ""expectedControlType"": ""Button"",
@@ -132,7 +132,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Brake"",
+                    ""action"": ""Breake"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -150,7 +150,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         // Donut
         m_Donut = asset.FindActionMap("Donut", throwIfNotFound: true);
         m_Donut_Thrust = m_Donut.FindAction("Thrust", throwIfNotFound: true);
-        m_Donut_Brake = m_Donut.FindAction("Brake", throwIfNotFound: true);
+        m_Donut_Breake = m_Donut.FindAction("Breake", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -277,13 +277,13 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Donut;
     private IDonutActions m_DonutActionsCallbackInterface;
     private readonly InputAction m_Donut_Thrust;
-    private readonly InputAction m_Donut_Brake;
+    private readonly InputAction m_Donut_Breake;
     public struct DonutActions
     {
         private @PlayerInput m_Wrapper;
         public DonutActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Thrust => m_Wrapper.m_Donut_Thrust;
-        public InputAction @Brake => m_Wrapper.m_Donut_Brake;
+        public InputAction @Breake => m_Wrapper.m_Donut_Breake;
         public InputActionMap Get() { return m_Wrapper.m_Donut; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -296,9 +296,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Thrust.started -= m_Wrapper.m_DonutActionsCallbackInterface.OnThrust;
                 @Thrust.performed -= m_Wrapper.m_DonutActionsCallbackInterface.OnThrust;
                 @Thrust.canceled -= m_Wrapper.m_DonutActionsCallbackInterface.OnThrust;
-                @Brake.started -= m_Wrapper.m_DonutActionsCallbackInterface.OnBrake;
-                @Brake.performed -= m_Wrapper.m_DonutActionsCallbackInterface.OnBrake;
-                @Brake.canceled -= m_Wrapper.m_DonutActionsCallbackInterface.OnBrake;
+                @Breake.started -= m_Wrapper.m_DonutActionsCallbackInterface.OnBreake;
+                @Breake.performed -= m_Wrapper.m_DonutActionsCallbackInterface.OnBreake;
+                @Breake.canceled -= m_Wrapper.m_DonutActionsCallbackInterface.OnBreake;
             }
             m_Wrapper.m_DonutActionsCallbackInterface = instance;
             if (instance != null)
@@ -306,9 +306,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Thrust.started += instance.OnThrust;
                 @Thrust.performed += instance.OnThrust;
                 @Thrust.canceled += instance.OnThrust;
-                @Brake.started += instance.OnBrake;
-                @Brake.performed += instance.OnBrake;
-                @Brake.canceled += instance.OnBrake;
+                @Breake.started += instance.OnBreake;
+                @Breake.performed += instance.OnBreake;
+                @Breake.canceled += instance.OnBreake;
             }
         }
     }
@@ -324,6 +324,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     public interface IDonutActions
     {
         void OnThrust(InputAction.CallbackContext context);
-        void OnBrake(InputAction.CallbackContext context);
+        void OnBreake(InputAction.CallbackContext context);
     }
 }

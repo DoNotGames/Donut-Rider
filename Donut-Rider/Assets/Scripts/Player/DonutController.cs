@@ -38,6 +38,8 @@ public class DonutController : MonoBehaviour
         {
             Debug.LogWarning("Donut is not valid");
         }
+
+        force += Vector3.right * speed;
     }
 
     private void Update()
@@ -56,27 +58,20 @@ public class DonutController : MonoBehaviour
         }
     }
 
-    public void Thrust(InputAction.CallbackContext context)
+    public void Thrust()
     {
         force = Vector3.zero;
-        force += Vector3.right * context.ReadValue<float>() * speed;
+        force += Vector3.right * speed;
     }
 
-    public void Brake(InputAction.CallbackContext context)
+    public void Brake(bool pressed)
     {
-        switch(context.phase)
+        if (pressed)
         {
-            case InputActionPhase.Started:
-                {
-                    donutRigidbody.drag = brakePower;
-                    break;
-                }
-
-            case InputActionPhase.Canceled:
-                {
-                    donutRigidbody.drag = dragBase;
-                    break;
-                }
+            donutRigidbody.drag = brakePower;
+            return;
         }
+
+        donutRigidbody.drag = dragBase;
     }
 }
