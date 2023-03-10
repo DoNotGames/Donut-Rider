@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class HPComponent : MonoBehaviour
 {
-    private int hp;
+    private int hp = 3;
     public int HP
     { 
         get { return hp; }
@@ -27,11 +27,6 @@ public class HPComponent : MonoBehaviour
 
     public delegate void OnHealthChanged(int hp);
     public event OnHealthChanged onHealthChanged;
-
-    HPComponent()
-    {
-        hp = 3;
-    }
 
     private void Awake()
     {

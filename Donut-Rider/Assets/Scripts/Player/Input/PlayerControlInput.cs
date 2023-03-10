@@ -1,3 +1,6 @@
+using UnityEditor.Rendering.LookDev;
+using UnityEngine.InputSystem;
+
 public class PlayerControlInput
 {
     private PlayerInput input;
@@ -7,6 +10,7 @@ public class PlayerControlInput
         input = newInput;
 
         input.Donut.Thrust.performed += ctx => donutController.Thrust();
+        input.Donut.Thrust.canceled += ctx => donutController.EndThrust();
         input.Donut.Breake.performed += ctx => donutController.Brake(true);
         input.Donut.Breake.canceled += ctx => donutController.Brake(false);
     }

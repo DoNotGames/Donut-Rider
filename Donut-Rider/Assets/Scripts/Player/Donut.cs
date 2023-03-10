@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Donut : MonoBehaviour
 {
-    private HPComponent hpComponent;
+    private HPComponent hpComponent = null;
 
     public delegate void OnGameOver();
     public event OnGameOver onGameOver;
@@ -10,17 +10,13 @@ public class Donut : MonoBehaviour
     public delegate void OnLevelComplete();
     public event OnLevelComplete onLevelComplete;
 
-    Donut()
-    {
-        hpComponent = null;
-    }
-
     private void Awake()
     {
         hpComponent = GetComponent<HPComponent>();
         if(hpComponent == null) 
         {
             Debug.LogWarning("HPComponent is not valid");
+            return;
         }
     }
 
