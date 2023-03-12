@@ -100,6 +100,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""b1dc5e08-99c6-4234-9a3c-18f4bfbf3608"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -135,6 +144,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Breake"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""70cecc4a-a95c-4dc9-94be-a78307b43afa"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -151,6 +171,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Donut = asset.FindActionMap("Donut", throwIfNotFound: true);
         m_Donut_Thrust = m_Donut.FindAction("Thrust", throwIfNotFound: true);
         m_Donut_Breake = m_Donut.FindAction("Breake", throwIfNotFound: true);
+        m_Donut_Jump = m_Donut.FindAction("Jump", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -278,12 +299,14 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private IDonutActions m_DonutActionsCallbackInterface;
     private readonly InputAction m_Donut_Thrust;
     private readonly InputAction m_Donut_Breake;
+    private readonly InputAction m_Donut_Jump;
     public struct DonutActions
     {
         private @PlayerInput m_Wrapper;
         public DonutActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Thrust => m_Wrapper.m_Donut_Thrust;
         public InputAction @Breake => m_Wrapper.m_Donut_Breake;
+        public InputAction @Jump => m_Wrapper.m_Donut_Jump;
         public InputActionMap Get() { return m_Wrapper.m_Donut; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -299,6 +322,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Breake.started -= m_Wrapper.m_DonutActionsCallbackInterface.OnBreake;
                 @Breake.performed -= m_Wrapper.m_DonutActionsCallbackInterface.OnBreake;
                 @Breake.canceled -= m_Wrapper.m_DonutActionsCallbackInterface.OnBreake;
+                @Jump.started -= m_Wrapper.m_DonutActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_DonutActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_DonutActionsCallbackInterface.OnJump;
             }
             m_Wrapper.m_DonutActionsCallbackInterface = instance;
             if (instance != null)
@@ -309,6 +335,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Breake.started += instance.OnBreake;
                 @Breake.performed += instance.OnBreake;
                 @Breake.canceled += instance.OnBreake;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
             }
         }
     }
@@ -325,5 +354,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     {
         void OnThrust(InputAction.CallbackContext context);
         void OnBreake(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
 }

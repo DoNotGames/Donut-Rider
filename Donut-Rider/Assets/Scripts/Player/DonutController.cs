@@ -1,6 +1,5 @@
-using Mono.Cecil.Cil;
+using Mono.Cecil;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class DonutController : MonoBehaviour
 {
@@ -10,6 +9,8 @@ public class DonutController : MonoBehaviour
     [SerializeField] private float thrustForce = 2.7f;
     [SerializeField] private float brakePower = 4f;
     [SerializeField] private Vector3 slowDownForce = new Vector3(0.8f, 0f, 0f);
+    [SerializeField] private float jumpForce = 20f;
+    [SerializeField] private LayerMask platformLayerMask;
 
     private float dragBase;
     private Vector3 constantForceBase;
@@ -94,5 +95,22 @@ public class DonutController : MonoBehaviour
         }
 
         donutRigidbody.drag = dragBase;
+    }
+
+    public void Jump()
+    {
+        if (IsGrounded()) Debug.Log("Grounded");
+        if (!IsGrounded()) Debug.Log("Air");
+        if (!IsGrounded()) return;
+
+        donutRigidbody.AddForce(Vector3.up * jumpForce);
+    }
+
+    public bool IsGrounded()
+    {
+        SphereCollider sphereCollider = GetComponent<SphereCollider>();
+        RaycastHit raycastHit;
+
+        return Physics.SphereCast(sphereCollider.bounds.center, sphereCollider.radius + 2f, -transform.up, out raycastHit, 2f, platformLayerMask);
     }
 }
