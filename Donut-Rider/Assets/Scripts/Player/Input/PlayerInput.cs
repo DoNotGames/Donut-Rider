@@ -157,6 +157,34 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""InGameGeneral"",
+            ""id"": ""6f3d2446-ad73-4cfb-a54d-c887e2a51c59"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""7a37925d-a80a-4713-9a66-18bd812e97db"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""1f8e8e02-8873-4bcd-aa81-83c72d29da34"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -172,6 +200,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Donut_Thrust = m_Donut.FindAction("Thrust", throwIfNotFound: true);
         m_Donut_Breake = m_Donut.FindAction("Breake", throwIfNotFound: true);
         m_Donut_Jump = m_Donut.FindAction("Jump", throwIfNotFound: true);
+        // InGameGeneral
+        m_InGameGeneral = asset.FindActionMap("InGameGeneral", throwIfNotFound: true);
+        m_InGameGeneral_Pause = m_InGameGeneral.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -342,6 +373,39 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public DonutActions @Donut => new DonutActions(this);
+
+    // InGameGeneral
+    private readonly InputActionMap m_InGameGeneral;
+    private IInGameGeneralActions m_InGameGeneralActionsCallbackInterface;
+    private readonly InputAction m_InGameGeneral_Pause;
+    public struct InGameGeneralActions
+    {
+        private @PlayerInput m_Wrapper;
+        public InGameGeneralActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Pause => m_Wrapper.m_InGameGeneral_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_InGameGeneral; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InGameGeneralActions set) { return set.Get(); }
+        public void SetCallbacks(IInGameGeneralActions instance)
+        {
+            if (m_Wrapper.m_InGameGeneralActionsCallbackInterface != null)
+            {
+                @Pause.started -= m_Wrapper.m_InGameGeneralActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_InGameGeneralActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_InGameGeneralActionsCallbackInterface.OnPause;
+            }
+            m_Wrapper.m_InGameGeneralActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
+            }
+        }
+    }
+    public InGameGeneralActions @InGameGeneral => new InGameGeneralActions(this);
     public interface IGlobalActions
     {
         void OnSwitchTestInputs(InputAction.CallbackContext context);
@@ -355,5 +419,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnThrust(InputAction.CallbackContext context);
         void OnBreake(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+    }
+    public interface IInGameGeneralActions
+    {
+        void OnPause(InputAction.CallbackContext context);
     }
 }

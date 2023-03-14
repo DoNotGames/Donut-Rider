@@ -1,37 +1,33 @@
 using UnityEngine;
-using TMPro;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField] private GameObject debugTestUI;
-    [SerializeField] private TMP_Text TestInputStatusText;
-
+    [SerializeField] private PauseMenu pauseMenu;
     private InputController inputController;
-    private TestInput testInput;
-    private bool isTestInputOn;
+    private bool isGamePaused;
+    private float startTimeScale;
 
     private void Awake()
     {
         inputController = GetComponent<InputController>();
-        testInput = inputController.GetTestInput();
-        isTestInputOn = false;
-        TestInputStatusText.text = "TestInputs is OFF";
+
+        isGamePaused = false;
+        startTimeScale = Time.timeScale;
     }
 
-    public void SwitchTestInput()
+    public void SwitchPause()
     {
-        isTestInputOn = !isTestInputOn;
+        isGamePaused = !isGamePaused;
 
-        if (isTestInputOn)
+        if (isGamePaused)
         {
-            testInput.Enable();
-            debugTestUI.SetActive(true);
-            TestInputStatusText.text = "TestInputs is ON";
+            inputController.DisableInput("PlayerControlInput");
+            Time.timeScale = 0;
+            pauseMenu.ShowMenu();
             return;
         }
-
-        testInput.Disable();
-        debugTestUI.SetActive(false);
-        TestInputStatusText.text = "TestInputs is OFF";
+        Time.timeScale = startTimeScale;
+        inputController.EnableInput("PlayerControlInput");
+        pauseMenu.HideMenu();
     }
 }

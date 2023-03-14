@@ -1,4 +1,4 @@
-public class PlayerControlInput
+public class PlayerControlInput : IInput
 {
     private PlayerInput input;
 

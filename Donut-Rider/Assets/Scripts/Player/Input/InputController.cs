@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InputController : MonoBehaviour
@@ -9,26 +10,36 @@ public class InputController : MonoBehaviour
 
     private PlayerInput playerInput;
     private GlobalInput globalInput;
-    private TestInput testInput;
+    private InGameGeneralInput inGameGeneralInput;
     private PlayerControlInput playerControlInput;
+
+    private Dictionary<string, IInput> inputs;
 
     private void Awake()
     {
+        inputs = new Dictionary<string, IInput>();
+
         playerInput = new PlayerInput();
-        if(debugMyText)
-            testInput = new TestInput(playerInput, debugMyText);
-        if(gameController)
-            globalInput = new GlobalInput(playerInput, gameController);
+        globalInput = new GlobalInput(playerInput, gameController);
+        inGameGeneralInput = new InGameGeneralInput(playerInput, gameController);
+        inputs.Add("InGameGeneralInput", inGameGeneralInput);
 
         donutController = GameObject.FindGameObjectWithTag("Player").GetComponent<DonutController>();
         playerControlInput = new PlayerControlInput(playerInput, donutController);
+        inputs.Add("PlayerControlInput", playerControlInput);
 
         //globalInput.Enable();
         playerControlInput.Enable();
+        inGameGeneralInput.Enable();
     }
 
-    public TestInput GetTestInput()
+    public void DisableInput(string inputName)
     {
-        return testInput;
+        inputs[inputName].Disable();
+    }
+
+    public void EnableInput(string inputName)
+    {
+        inputs[inputName].Enable();
     }
 }

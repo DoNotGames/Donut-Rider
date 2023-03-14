@@ -5,8 +5,6 @@ public class GlobalInput
     public GlobalInput(PlayerInput newInput, GameController newGameController)
     {
         input = newInput;
-
-        input.Global.SwitchTestInputs.performed += ctx => newGameController.SwitchTestInput();
     }
 
     public void Enable()
