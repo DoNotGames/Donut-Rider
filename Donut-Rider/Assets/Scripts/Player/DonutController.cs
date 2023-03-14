@@ -15,6 +15,7 @@ public class DonutController : MonoBehaviour
     private float dragBase;
     private Vector3 constantForceBase;
     private Vector3 thrustForceToAdd;
+    private bool brake = false;
 
     private Rigidbody donutRigidbody = null;
     private ConstantForce constantForceComponent = null;
@@ -57,44 +58,52 @@ public class DonutController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (thrustForceToAdd != Vector3.zero)
-        {
-            donutRigidbody.AddForce(thrustForceToAdd);
+        float desiredSpeed = brake ? 0f : maxSpeed;
 
-            if (donutRigidbody.velocity.magnitude > thrustMaxSpeed)
-            {
-                donutRigidbody.velocity = donutRigidbody.velocity.normalized * thrustMaxSpeed;
-            }
-            return;
-        }
+        donutRigidbody.velocity = new Vector3(Mathf.MoveTowards(donutRigidbody.velocity.magnitude, desiredSpeed, 5f * Time.deltaTime), donutRigidbody.velocity.y, donutRigidbody.velocity.z);
 
-        if (donutRigidbody.velocity.magnitude > maxSpeed)
-        {
-            constantForceComponent.force = slowDownForce;//Vector3.zero;
-            return;
-        }
-        constantForceComponent.force = constantForceBase;
+
+        //if (thrustForceToAdd != Vector3.zero)
+        //{
+        //    donutRigidbody.AddForce(thrustForceToAdd);
+
+        //    if (donutRigidbody.velocity.magnitude > thrustMaxSpeed)
+        //    {
+        //        donutRigidbody.velocity = donutRigidbody.velocity.normalized * thrustMaxSpeed;
+        //    }
+        //    return;
+        //}
+
+        //if (donutRigidbody.velocity.magnitude > maxSpeed)
+        //{
+        //    constantForceComponent.force = slowDownForce;//Vector3.zero;
+        //    return;
+        //}
+        //constantForceComponent.force = constantForceBase;
     }
 
     public void Thrust()
     {
-        thrustForceToAdd += Vector3.right * thrustForce;
+        // thrustForceToAdd += Vector3.right * thrustForce;
+        maxSpeed = 20f;
     }
 
     public void EndThrust()
     {
-        thrustForceToAdd = Vector3.zero;
+        //thrustForceToAdd = Vector3.zero;
+        maxSpeed = 10f;
     }
 
     public void Brake(bool pressed)
     {
         if (pressed)
         {
-            donutRigidbody.drag = brakePower;
+            brake = true;
+            //donutRigidbody.drag = brakePower;
             return;
         }
-
-        donutRigidbody.drag = dragBase;
+        brake = false;
+        //donutRigidbody.drag = dragBase;
     }
 
     public void Jump()
