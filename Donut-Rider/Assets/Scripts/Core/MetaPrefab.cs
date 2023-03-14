@@ -24,12 +24,12 @@ public class MetaPrefab : MonoBehaviour
 
     public void EndGameByMeta(GameObject player)
     {
-        EndGameByMetaEvent();
+        EndGameByMetaEvent?.Invoke();
         int currLvlIndex = PlayerPrefs.GetInt("NextLevelUnlockIndex");
         PlayerPrefs.SetInt("NextLevelUnlockIndex", currLvlIndex + 1);
         StartEndEffect();
        //ameStatus.CurrentGameStatus = GameStatus.CurrentGameStatus.Play;
-        Destroy(player);
+        player.SetActive(false);
     }
 
     public void StartEndEffect()

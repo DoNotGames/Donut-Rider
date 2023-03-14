@@ -468,7 +468,6 @@ GameObject:
   - component: {fileID: 549244556}
   - component: {fileID: 549244555}
   - component: {fileID: 549244557}
-  - component: {fileID: 549244558}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -490,7 +489,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugMyText: {fileID: 0}
   gameController: {fileID: 0}
-  donutController: {fileID: 0}
 --- !u!4 &549244556
 Transform:
   m_ObjectHideFlags: 0
@@ -519,18 +517,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraDelay: 0.95
---- !u!114 &549244558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 549244554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29897b85ac59f64449d4bc4958552924, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
