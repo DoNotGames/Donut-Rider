@@ -17,6 +17,6 @@ public class StartPrefab : MonoBehaviour
 
     public void SpawnPlayer(Vector3 spawnPos, GameObject playerPrefab)
     {
-        Instantiate(PlayerPrefab, spawnPos, new Quaternion(0, 90, 90, 0));
+        Instantiate(PlayerPrefab, spawnPos, Quaternion.identity);
     }
 }

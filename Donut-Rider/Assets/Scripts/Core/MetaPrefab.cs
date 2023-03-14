@@ -5,6 +5,10 @@ using UnityEngine;
 public class MetaPrefab : MonoBehaviour
 {
     public GameObject EndEffects;
+    public delegate void EndGame();
+    public static event EndGame EndGameByMetaEvent;
+
+
     private void Awake()
     {
         gameObject.GetComponent<MeshRenderer>().enabled = false;
@@ -20,10 +24,12 @@ public class MetaPrefab : MonoBehaviour
 
     public void EndGameByMeta(GameObject player)
     {
-        Destroy(player);
+        EndGameByMetaEvent();
         int currLvlIndex = PlayerPrefs.GetInt("NextLevelUnlockIndex");
         PlayerPrefs.SetInt("NextLevelUnlockIndex", currLvlIndex + 1);
         StartEndEffect();
+       //ameStatus.CurrentGameStatus = GameStatus.CurrentGameStatus.Play;
+        Destroy(player);
     }
 
     public void StartEndEffect()

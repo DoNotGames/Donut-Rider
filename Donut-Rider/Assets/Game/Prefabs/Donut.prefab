@@ -68,6 +68,10 @@ MonoBehaviour:
   thrustForce: 2
   brakePower: 10
   slowDownForce: {x: 0.8, y: 0, z: 0}
+  jumpForce: 20
+  platformLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &8759808177651109286
 MonoBehaviour:
   m_ObjectHideFlags: 0
