@@ -4,7 +4,8 @@ public class InputController : MonoBehaviour
 {
     [SerializeField] private DebugMyText debugMyText;
     [SerializeField] private GameController gameController;
-    [SerializeField] private DonutController donutController;
+
+    private DonutController donutController;
 
     private PlayerInput playerInput;
     private GlobalInput globalInput;
@@ -19,6 +20,7 @@ public class InputController : MonoBehaviour
         if(gameController)
             globalInput = new GlobalInput(playerInput, gameController);
 
+        donutController = GameObject.FindGameObjectWithTag("Player").GetComponent<DonutController>();
         playerControlInput = new PlayerControlInput(playerInput, donutController);
 
         //globalInput.Enable();
