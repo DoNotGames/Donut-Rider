@@ -8,8 +8,8 @@ public class PlayerControlInput : IInput
 
         input.Donut.Thrust.performed += ctx => donutController.Thrust();
         input.Donut.Thrust.canceled += ctx => donutController.EndThrust();
-        input.Donut.Breake.performed += ctx => donutController.Brake(true);
-        input.Donut.Breake.canceled += ctx => donutController.Brake(false);
+        input.Donut.Breake.performed += ctx => donutController.Brake();
+        input.Donut.Breake.canceled += ctx => donutController.EndBrake();
         input.Donut.Jump.performed += ctx => donutController.Jump();
     }
 

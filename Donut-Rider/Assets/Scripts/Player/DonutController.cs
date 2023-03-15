@@ -7,14 +7,16 @@ public class DonutController : MonoBehaviour
     [SerializeField] private float maxSpeed = 10f;
     [SerializeField] private float thrustMaxSpeed = 20f;
     [SerializeField] private float thrustForce = 2.7f;
-    [SerializeField] private float brakePower = 4f;
+    [SerializeField] private float brakePower = 10f;
     [SerializeField] private Vector3 slowDownForce = new Vector3(0.8f, 0f, 0f);
-    [SerializeField] private float jumpForce = 20f;
-    [SerializeField] private LayerMask platformLayerMask;
+    [SerializeField] private float jumpForce = 40f;
+    [SerializeField] private float bufferCheckDistance = 0.1f;
 
-    private float dragBase;
     private Vector3 constantForceBase;
     private Vector3 thrustForceToAdd;
+    private bool brake = false;
+    private bool grounded = false;
+    private float groundCheckDistance;
 
     private Rigidbody donutRigidbody = null;
     private ConstantForce constantForceComponent = null;
@@ -43,8 +45,9 @@ public class DonutController : MonoBehaviour
             return;
         }
 
-        dragBase = donutRigidbody.drag;
         constantForceBase = constantForceComponent.force;
+
+        groundCheckDistance = GetComponent<SphereCollider>().radius + bufferCheckDistance;
     }
 
     private void Update()
@@ -53,10 +56,19 @@ public class DonutController : MonoBehaviour
         {
             donut.GameOver();
         }
+
+        RaycastHit hit;
+        grounded = Physics.Raycast(transform.position, Vector3.down, out hit, groundCheckDistance);
     }
 
     private void FixedUpdate()
     {
+        if(brake)
+        {
+            donutRigidbody.velocity = new Vector3(Mathf.MoveTowards(donutRigidbody.velocity.magnitude, 0f, brakePower * Time.deltaTime), donutRigidbody.velocity.y, donutRigidbody.velocity.z);
+            return;
+        }
+
         if (thrustForceToAdd != Vector3.zero)
         {
             donutRigidbody.AddForce(thrustForceToAdd);
@@ -70,9 +82,10 @@ public class DonutController : MonoBehaviour
 
         if (donutRigidbody.velocity.magnitude > maxSpeed)
         {
-            constantForceComponent.force = slowDownForce;//Vector3.zero;
+            constantForceComponent.force = slowDownForce;
             return;
         }
+
         constantForceComponent.force = constantForceBase;
     }
 
@@ -86,31 +99,22 @@ public class DonutController : MonoBehaviour
         thrustForceToAdd = Vector3.zero;
     }
 
-    public void Brake(bool pressed)
+    public void Brake()
     {
-        if (pressed)
-        {
-            donutRigidbody.drag = brakePower;
-            return;
-        }
+        brake = true;
+        constantForceComponent.force = Vector3.zero;
+    }
 
-        donutRigidbody.drag = dragBase;
+    public void EndBrake()
+    {
+        brake = false;
+        constantForceComponent.force = constantForceBase;
     }
 
     public void Jump()
     {
-        if (IsGrounded()) Debug.Log("Grounded");
-        if (!IsGrounded()) Debug.Log("Air");
-        if (!IsGrounded()) return;
+        if (!grounded) return;
 
         donutRigidbody.AddForce(Vector3.up * jumpForce);
-    }
-
-    public bool IsGrounded()
-    {
-        SphereCollider sphereCollider = GetComponent<SphereCollider>();
-        RaycastHit raycastHit;
-
-        return Physics.SphereCast(sphereCollider.bounds.center, sphereCollider.radius + 2f, -transform.up, out raycastHit, 2f, platformLayerMask);
     }
 }
