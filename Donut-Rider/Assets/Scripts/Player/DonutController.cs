@@ -65,7 +65,7 @@ public class DonutController : MonoBehaviour
     {
         if(brake)
         {
-            donutRigidbody.velocity = new Vector3(Mathf.MoveTowards(donutRigidbody.velocity.magnitude, 0f, brakePower * Time.deltaTime), donutRigidbody.velocity.y, donutRigidbody.velocity.z);
+            donutRigidbody.velocity = new Vector3(Mathf.MoveTowards(donutRigidbody.velocity.x, 0f, brakePower * Time.deltaTime), donutRigidbody.velocity.y, donutRigidbody.velocity.z);
             return;
         }
 
@@ -73,14 +73,14 @@ public class DonutController : MonoBehaviour
         {
             donutRigidbody.AddForce(thrustForceToAdd);
 
-            if (donutRigidbody.velocity.magnitude > thrustMaxSpeed)
+            if (donutRigidbody.velocity.x > thrustMaxSpeed)
             {
                 donutRigidbody.velocity = donutRigidbody.velocity.normalized * thrustMaxSpeed;
             }
             return;
         }
 
-        if (donutRigidbody.velocity.magnitude > maxSpeed)
+        if (donutRigidbody.velocity.x > maxSpeed)
         {
             constantForceComponent.force = slowDownForce;
             return;
