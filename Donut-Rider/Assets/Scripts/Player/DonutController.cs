@@ -22,6 +22,7 @@ public class DonutController : MonoBehaviour
     private ConstantForce constantForceComponent = null;
     private Donut donut = null;
 
+
     private void Awake()
     {
         donutRigidbody = GetComponent<Rigidbody>();
@@ -63,6 +64,9 @@ public class DonutController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!grounded)
+            return;
+
         if(brake)
         {
             donutRigidbody.velocity = new Vector3(Mathf.MoveTowards(donutRigidbody.velocity.x, 0f, brakePower * Time.deltaTime), donutRigidbody.velocity.y, donutRigidbody.velocity.z);
