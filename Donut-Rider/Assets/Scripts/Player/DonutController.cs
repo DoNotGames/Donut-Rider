@@ -64,24 +64,24 @@ public class DonutController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!grounded)
-            return;
-
-        if(brake)
+        if (grounded)
         {
-            donutRigidbody.velocity = new Vector3(Mathf.MoveTowards(donutRigidbody.velocity.x, 0f, brakePower * Time.deltaTime), donutRigidbody.velocity.y, donutRigidbody.velocity.z);
-            return;
-        }
-
-        if (thrustForceToAdd != Vector3.zero)
-        {
-            donutRigidbody.AddForce(thrustForceToAdd);
-
-            if (donutRigidbody.velocity.x > thrustMaxSpeed)
+            if (brake)
             {
-                donutRigidbody.velocity = donutRigidbody.velocity.normalized * thrustMaxSpeed;
+                donutRigidbody.velocity = new Vector3(Mathf.MoveTowards(donutRigidbody.velocity.x, 0f, brakePower * Time.deltaTime), donutRigidbody.velocity.y, donutRigidbody.velocity.z);
+                return;
             }
-            return;
+
+            if (thrustForceToAdd != Vector3.zero)
+            {
+                donutRigidbody.AddForce(thrustForceToAdd);
+
+                if (donutRigidbody.velocity.x > thrustMaxSpeed)
+                {
+                    donutRigidbody.velocity = donutRigidbody.velocity.normalized * thrustMaxSpeed;
+                }
+                return;
+            }
         }
 
         if (donutRigidbody.velocity.x > maxSpeed)
