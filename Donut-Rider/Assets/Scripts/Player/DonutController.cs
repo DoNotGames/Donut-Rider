@@ -14,6 +14,7 @@ public class DonutController : MonoBehaviour
 
     private Vector3 constantForceBase;
     private Vector3 thrustForceToAdd;
+    private float onJumpXVelocity;
     private bool brake = false;
     private bool grounded = false;
     private float groundCheckDistance;
@@ -78,10 +79,20 @@ public class DonutController : MonoBehaviour
 
                 if (donutRigidbody.velocity.x > thrustMaxSpeed)
                 {
-                    donutRigidbody.velocity = donutRigidbody.velocity.normalized * thrustMaxSpeed;
+                    donutRigidbody.velocity = new Vector3(
+                        donutRigidbody.velocity.normalized.x * thrustMaxSpeed,
+                        donutRigidbody.velocity.y,
+                        donutRigidbody.velocity.z);
                 }
                 return;
             }
+        }
+        else
+        {
+            donutRigidbody.velocity = new Vector3(
+                onJumpXVelocity,
+                donutRigidbody.velocity.y,
+                donutRigidbody.velocity.z);
         }
 
         if (donutRigidbody.velocity.x > maxSpeed)
@@ -95,7 +106,7 @@ public class DonutController : MonoBehaviour
 
     public void Thrust()
     {
-        thrustForceToAdd += Vector3.right * thrustForce;
+        thrustForceToAdd = Vector3.right * thrustForce;
     }
 
     public void EndThrust()
@@ -119,6 +130,7 @@ public class DonutController : MonoBehaviour
     {
         if (!grounded) return;
 
+        onJumpXVelocity = donutRigidbody.velocity.x;
         donutRigidbody.AddForce(Vector3.up * jumpForce);
     }
 }
