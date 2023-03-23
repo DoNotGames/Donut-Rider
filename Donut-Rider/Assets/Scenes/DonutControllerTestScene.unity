@@ -649,8 +649,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b6bb7f7a77a005409f79a32dabb0963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraDelay: 0.95
-  cameraOffset: {x: 0, y: 5, z: -20}
+  cameraSpeed: 2
+  cameraOffset: {x: 5, y: 5, z: -20}
 --- !u!114 &549244558
 MonoBehaviour:
   m_ObjectHideFlags: 0
