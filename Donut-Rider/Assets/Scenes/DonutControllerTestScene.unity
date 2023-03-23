@@ -650,6 +650,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraDelay: 0.95
+  cameraOffset: {x: 0, y: 5, z: -20}
 --- !u!114 &549244558
 MonoBehaviour:
   m_ObjectHideFlags: 0
