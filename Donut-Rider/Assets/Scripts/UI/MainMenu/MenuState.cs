@@ -17,6 +17,7 @@ public class MenuState : MonoBehaviour
     {
         currentMenu.SetActive(false);
         newMenu.SetActive(true);
+        SoundsController.Play_Sound("menu_click");
 
         currentMenu = newMenu;
     }
