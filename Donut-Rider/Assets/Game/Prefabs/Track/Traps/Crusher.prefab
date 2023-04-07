@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3279212476993065304}
   m_Layer: 0
-  m_Name: FBX
+  m_Name: SFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,7 +125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1758439050085317638}
   m_Layer: 0
-  m_Name: FBX
+  m_Name: SFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
