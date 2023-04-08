@@ -13,22 +13,22 @@ public class SoundsController : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         Audio = GetComponent<AudioSource>();
+        Instance = GetComponent<SoundsController>();
     }
     public static void Play_Sound(string SoundName)
     {
         foreach(SoundType CurrSound in SoundsController.Instance.SoundList)
         {
+            Debug.Log(CurrSound.SoundName);
             if(SoundName == CurrSound.SoundName)
             {
                 AudioSource audio = Instance.Audio;
                 audio.volume = CurrSound.AudioVolume;
                 audio.PlayOneShot(CurrSound.SoundClip);
-            }
-            else
-            {
-                Debug.LogError("Cannot find audio source named:  " + SoundName);
+                return;
             }
         }
+        Debug.LogError("Cannot find audio source named: " + SoundName);
     }
 }
 [System.Serializable]

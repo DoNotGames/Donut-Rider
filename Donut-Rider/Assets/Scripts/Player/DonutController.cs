@@ -1,4 +1,5 @@
 using Mono.Cecil;
+using System;
 using UnityEngine;
 
 public class DonutController : MonoBehaviour
@@ -10,14 +11,15 @@ public class DonutController : MonoBehaviour
     [SerializeField] private float brakePower = 10f;
     [SerializeField] private Vector3 slowDownForce = new Vector3(0.8f, 0f, 0f);
     [SerializeField] private float jumpForce = 40f;
+    [SerializeField] private Vector3 ongoingJumpForce = new Vector3(0.4f, 0f, 0f);
     [SerializeField] private float bufferCheckDistance = 0.1f;
 
     private Vector3 constantForceBase;
     private Vector3 thrustForceToAdd;
-    private float onJumpXVelocity;
     private bool brake = false;
     private bool grounded = false;
     private float groundCheckDistance;
+    private float onJumpXVelocity;
 
     private Rigidbody donutRigidbody = null;
     private ConstantForce constantForceComponent = null;
@@ -86,13 +88,23 @@ public class DonutController : MonoBehaviour
                 }
                 return;
             }
+
+            if (onJumpXVelocity != 0f)
+            {
+                onJumpXVelocity = 0f;
+            }
         }
         else
         {
+            if(onJumpXVelocity == 0f)
+            {
+                onJumpXVelocity = onJumpXVelocity = donutRigidbody.velocity.x;
+            }
+
             donutRigidbody.velocity = new Vector3(
-                onJumpXVelocity,
-                donutRigidbody.velocity.y,
-                donutRigidbody.velocity.z);
+               onJumpXVelocity,
+               donutRigidbody.velocity.y,
+               donutRigidbody.velocity.z);
         }
 
         if (donutRigidbody.velocity.x > maxSpeed)
@@ -130,7 +142,6 @@ public class DonutController : MonoBehaviour
     {
         if (!grounded) return;
 
-        onJumpXVelocity = donutRigidbody.velocity.x;
         donutRigidbody.AddForce(Vector3.up * jumpForce);
     }
 }
