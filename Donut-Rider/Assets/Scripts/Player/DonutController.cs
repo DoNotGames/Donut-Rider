@@ -1,4 +1,5 @@
 using Mono.Cecil;
+using System;
 using UnityEngine;
 
 public class DonutController : MonoBehaviour
@@ -18,6 +19,7 @@ public class DonutController : MonoBehaviour
     private bool brake = false;
     private bool grounded = false;
     private float groundCheckDistance;
+    private float onJumpXVelocity;
 
     private Rigidbody donutRigidbody = null;
     private ConstantForce constantForceComponent = null;
@@ -86,11 +88,23 @@ public class DonutController : MonoBehaviour
                 }
                 return;
             }
+
+            if (onJumpXVelocity != 0f)
+            {
+                onJumpXVelocity = 0f;
+            }
         }
         else
         {
-            constantForceComponent.force = ongoingJumpForce;
-            return;
+            if(onJumpXVelocity == 0f)
+            {
+                onJumpXVelocity = onJumpXVelocity = donutRigidbody.velocity.x;
+            }
+
+            donutRigidbody.velocity = new Vector3(
+               onJumpXVelocity,
+               donutRigidbody.velocity.y,
+               donutRigidbody.velocity.z);
         }
 
         if (donutRigidbody.velocity.x > maxSpeed)
