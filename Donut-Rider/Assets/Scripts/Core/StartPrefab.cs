@@ -3,6 +3,7 @@ using UnityEngine;
 public class StartPrefab : MonoBehaviour
 {
     public GameObject PlayerPrefab;
+    public GameObject GrayscaleFilterPrefab;
 
     private void Awake()
     {
@@ -15,6 +16,9 @@ public class StartPrefab : MonoBehaviour
 
     public void SpawnPlayer(Vector3 spawnPos, GameObject playerPrefab)
     {
-        Instantiate(PlayerPrefab, spawnPos, Quaternion.identity);
+        var Player = Instantiate(PlayerPrefab, spawnPos, Quaternion.identity);
+        var Filter = Instantiate(GrayscaleFilterPrefab, spawnPos, Quaternion.identity);
+
+        Filter.GetComponent<Follower>().Init(Player);
     }
 }
