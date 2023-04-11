@@ -12,9 +12,9 @@ public class GrayscaleFilter : MonoBehaviour
     {
         _gameObjectToUse = gameObjectToUse;
 
-        //rectTransform.
-
         enabled = true;
+        rectTransform.offsetMax = new Vector2(-856.6498f, Screen.height);
+        rectTransform.localPosition = new Vector3(rectTransform.localPosition.x, 0, 0);
     }
 
     private void Awake()
