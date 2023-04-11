@@ -1,5 +1,10 @@
 Shader "Custom/GrayscaleFilter"
 {
+	Properties
+	{
+		_MainTex("Texture", 2D) = "white" {}
+	}
+
 	SubShader
 	{
 		// Draw ourselves after all opaque geometry

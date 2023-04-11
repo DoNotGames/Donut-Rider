@@ -17,8 +17,8 @@ public class StartPrefab : MonoBehaviour
     public void SpawnPlayer(Vector3 spawnPos, GameObject playerPrefab)
     {
         var Player = Instantiate(PlayerPrefab, spawnPos, Quaternion.identity);
-        var Filter = Instantiate(GrayscaleFilterPrefab, spawnPos, Quaternion.identity);
+        //var Filter = Instantiate(GrayscaleFilterPrefab, spawnPos, Quaternion.identity);
 
-        Filter.GetComponent<Follower>().Init(Player);
+        //Filter.GetComponent<Follower>().Init(Player);
     }
 }
