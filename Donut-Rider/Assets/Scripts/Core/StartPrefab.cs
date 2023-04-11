@@ -4,6 +4,7 @@ public class StartPrefab : MonoBehaviour
 {
     public GameObject PlayerPrefab;
     public GameObject GrayscaleFilterPrefab;
+    public GameObject PointToCaptureInViewport;
 
     private void Awake()
     {
@@ -17,8 +18,11 @@ public class StartPrefab : MonoBehaviour
     public void SpawnPlayer(Vector3 spawnPos, GameObject playerPrefab)
     {
         var Player = Instantiate(PlayerPrefab, spawnPos, Quaternion.identity);
-        //var Filter = Instantiate(GrayscaleFilterPrefab, spawnPos, Quaternion.identity);
 
-        //Filter.GetComponent<Follower>().Init(Player);
+        var Point = Instantiate(PointToCaptureInViewport, spawnPos, Quaternion.identity);
+        Point.GetComponent<Follower>().Init(Player);
+
+        var Filter = Instantiate(GrayscaleFilterPrefab, spawnPos, Quaternion.identity, FindObjectOfType<Canvas>().transform);
+        Filter.GetComponent<GrayscaleFilter>().Init(Point);
     }
 }

@@ -98,5 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerPrefab: {fileID: 767792767194814745, guid: 9ddae12f61255e44282d4444014d60b3,
     type: 3}
-  GrayscaleFilterPrefab: {fileID: 8310824102694855661, guid: f1c2e6f4ab467814fb1fef1614554402,
+  GrayscaleFilterPrefab: {fileID: 8361899820281294384, guid: 1feb38a8124f365449530f3a4b17ce2f,
+    type: 3}
+  PointToCaptureInViewport: {fileID: 333352321980033516, guid: a32822b895a8be342a86db82bc34017f,
     type: 3}

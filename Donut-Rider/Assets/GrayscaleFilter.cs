@@ -6,16 +6,25 @@ public class GrayscaleFilter : MonoBehaviour
 {
     [SerializeField] RectTransform rectTransform;
 
-    GameObject gameObjectToUse;
+    private GameObject _gameObjectToUse;
 
-    public void Start()
+    public void Init(GameObject gameObjectToUse)
     {
-        gameObjectToUse = GameObject.Find("Donut(Clone)").transform.GetChild(1).gameObject;//XD
+        _gameObjectToUse = gameObjectToUse;
+
+        //rectTransform.
+
+        enabled = true;
     }
 
-    void Update()
+    private void Awake()
     {
-        Vector3 viewportLocation = Camera.main.WorldToViewportPoint(gameObjectToUse.transform.position);
+        enabled = false;
+    }
+
+    private void Update()
+    {
+        Vector3 viewportLocation = Camera.main.WorldToViewportPoint(_gameObjectToUse.transform.position);
         rectTransform.offsetMin = new Vector2(viewportLocation.x * Screen.width, rectTransform.offsetMin.y);
     }
 }
