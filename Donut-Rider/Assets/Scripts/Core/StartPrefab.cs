@@ -22,7 +22,7 @@ public class StartPrefab : MonoBehaviour
         var Point = Instantiate(PointToCaptureInViewport, spawnPos, Quaternion.identity);
         Point.GetComponent<Follower>().Init(Player);
 
-        var Filter = Instantiate(GrayscaleFilterPrefab, spawnPos, Quaternion.identity, FindObjectOfType<Canvas>().transform);
+        var Filter = Instantiate(GrayscaleFilterPrefab, Vector3.zero, Quaternion.identity, FindObjectOfType<Canvas>().transform);
         Filter.GetComponent<GrayscaleFilter>().Init(Point);
     }
 }
