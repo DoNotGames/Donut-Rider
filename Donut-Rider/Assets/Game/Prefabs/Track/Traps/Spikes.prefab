@@ -88,9 +88,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5279471982832182405}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6b11373a075a6c498eb14a637260376, type: 3}
+  m_Script: {fileID: 11500000, guid: fc12b4826eb7f5540afe51da65b8c322, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slowDownForce: 50
+  damage: 1
+  isDamaging: 1
+  isSlowingDown: 1
 --- !u!1001 &6628577488889811613
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -144,4 +144,9 @@ public class DonutController : MonoBehaviour
 
         donutRigidbody.AddForce(Vector3.up * jumpForce);
     }
+
+    public void ReduceSpeed(float force)
+    {
+        donutRigidbody.AddForce(Vector3.left * force);
+    }
 }
