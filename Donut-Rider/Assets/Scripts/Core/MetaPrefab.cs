@@ -16,7 +16,7 @@ public class MetaPrefab : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        if(collider.GetComponent<Donut>())
+        if(collider.GetComponent<DonutMenager>())
         {
             EndGameByMeta(collider.gameObject);
         }

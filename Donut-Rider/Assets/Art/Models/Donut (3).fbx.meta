@@ -3,7 +3,22 @@ guid: fd307a111de55d7469768ee031043ec9
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Donut_Base_Mat
+    second: {fileID: 2100000, guid: 319fbe130ca2d7c4c9b0c2b460738ebc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Donut_Choco_Peace_Mat
+    second: {fileID: 2100000, guid: 3964a2aa4e0da584c93e39edd103ddc8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Donut_Frosting_Mat
+    second: {fileID: 2100000, guid: e91858730a14faf4b9ebdf6c3b822894, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

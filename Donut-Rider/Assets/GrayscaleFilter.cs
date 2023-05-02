@@ -24,7 +24,7 @@ public class GrayscaleFilter : MonoBehaviour
         enabled = false;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         Vector3 viewportLocation = Camera.main.WorldToViewportPoint(_gameObjectToUse.transform.position);
         rectTransform.offsetMin = new Vector2(viewportLocation.x * Screen.width, rectTransform.offsetMin.y);

@@ -7,6 +7,8 @@ public class Donut : MonoBehaviour
     [SerializeField] private bool isInvulnerable;
     [SerializeField] private float invulnerableTimeAfterDamage;
 
+    private float timePast;
+
     public delegate void OnGameOver();
     public event OnGameOver onGameOver;
 
@@ -17,8 +19,6 @@ public class Donut : MonoBehaviour
 
     private HPComponent hpComponent;
     private DonutController donutController;
-
-    private float timePast;
 
     private void Awake()
     {

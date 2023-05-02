@@ -9,15 +9,15 @@ public class Trap : MonoBehaviour
     [SerializeField] private bool isSlowingDown;
     private void OnTriggerEnter(Collider other)
     {
-        React(other.GetComponent<Donut>());
+        React(other.GetComponent<DonutMenager>());
     }
 
-    public void React(Donut donut)
+    public void React(DonutMenager donutMenager)
     {
         if (isDamaging)
-            donut.TakeDamage(damage);
+            donutMenager.donutHealth.TakeDamage(damage);
 
         if (isSlowingDown)
-            donut.SlowDown(slowDownForce);
+            donutMenager.SlowDown(slowDownForce);
     }
 }

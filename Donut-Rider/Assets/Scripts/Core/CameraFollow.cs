@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField][Range(0,20)] private float cameraSpeed;
+    [SerializeField] private float cameraSpeed;
     [SerializeField] private Vector3 cameraOffset;
 
     private Transform playerTransform;
@@ -16,7 +16,7 @@ public class CameraFollow : MonoBehaviour
 
     private void LateUpdate()
     {
-        Vector3 desiredPositon = playerTransform.position + cameraOffset;
-        mainCameraTransform.position = Vector3.Slerp(mainCameraTransform.position, desiredPositon, Time.deltaTime * cameraSpeed);
+        Vector3 desiredPosition = playerTransform.position + cameraOffset;
+        mainCameraTransform.position = Vector3.Slerp(mainCameraTransform.position, desiredPosition, Time.deltaTime * cameraSpeed);
     }
 }

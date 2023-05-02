@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc12b4826eb7f5540afe51da65b8c322, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slowDownForce: 50
+  slowDownForce: 0.5
   damage: 1
   isDamaging: 1
   isSlowingDown: 1

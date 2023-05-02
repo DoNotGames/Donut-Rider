@@ -6,7 +6,7 @@ public class InputController : MonoBehaviour
     [SerializeField] private DebugMyText debugMyText;
     [SerializeField] private GameController gameController;
 
-    private DonutController donutController;
+    private DonutMenager donutController;
 
     private PlayerInput playerInput;
     private GlobalInput globalInput;
@@ -24,7 +24,7 @@ public class InputController : MonoBehaviour
         inGameGeneralInput = new InGameGeneralInput(playerInput, gameController);
         inputs.Add("InGameGeneralInput", inGameGeneralInput);
 
-        donutController = GameObject.FindGameObjectWithTag("Player").GetComponent<DonutController>();
+        donutController = GameObject.FindGameObjectWithTag("Player").GetComponent<DonutMenager>();
         playerControlInput = new PlayerControlInput(playerInput, donutController);
         inputs.Add("PlayerControlInput", playerControlInput);
 
