@@ -17,7 +17,7 @@ public class Follower : MonoBehaviour
         enabled = false;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         transform.position = objectToFollow.transform.position + offset;
     }

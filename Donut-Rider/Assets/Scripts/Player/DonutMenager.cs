@@ -3,11 +3,16 @@ using UnityEngine;
 
 public class DonutMenager : MonoBehaviour
 {
+    [Header("Movement")]
     [SerializeField] private float friction;
+    [SerializeField] private float midAirFriction;
     [SerializeField] private float speed;
     [SerializeField] private float accelerationForce;
     [SerializeField] private float slowForce;
     [SerializeField] private float jumpForce;
+    [SerializeField] private float minimalSpeed;
+
+    [Header("Damage")]
     [SerializeField] private float invulnerableTimeAfterDamage;
     [SerializeField] private List<GameObject> sprinkles;
 
@@ -18,38 +23,47 @@ public class DonutMenager : MonoBehaviour
     private DonutMovement donutMovement;
     private DonutEffects donutEffects;
 
+    private Rigidbody donutRigidbody;
+    private bool isBreaking;
+
     private void Awake()
     {
         donutMovement = GetComponent<DonutMovement>();
-        donutMovement.ChangeSpeed(speed);
+        donutMovement.ChangeMoveForce(speed);
+        donutMovement.SetGroundFricition(friction);
+        donutMovement.SetMidAirFricition(midAirFriction);
         donutHealth = new DonutHealth(this);
         donutEffects = new DonutEffects(transform.Find("VFX").gameObject);
-        GetComponent<Rigidbody>().drag = friction;
+        donutRigidbody = GetComponent<Rigidbody>();
+        donutRigidbody.drag = friction;
     }
 
     private void Update()
     {
         Stayinvulnerable();
+        SpeedControll();
     }
 
     public void Thrust()
     {
-        donutMovement.ChangeSpeed(speed + accelerationForce);
+        donutMovement.ChangeMoveForce(speed + accelerationForce);
     }
 
     public void EndThrust()
     {
-        donutMovement.ChangeSpeed(speed);
+        donutMovement.ChangeMoveForce(speed);
     }
 
     public void Brake()
     {
-        donutMovement.ChangeSpeed(speed - slowForce);
+        isBreaking = true;
+        donutMovement.ChangeMoveForce(speed - slowForce);
     }
 
     public void EndBrake()
     {
-        donutMovement.ChangeSpeed(speed);
+        isBreaking = false;
+        donutMovement.ChangeMoveForce(speed);
     }
 
     public void Jump()
@@ -63,6 +77,12 @@ public class DonutMenager : MonoBehaviour
             return;
 
         donutMovement.AddForce(new Vector3(-slowForce, 0));
+    }
+
+    public void EjectSprinkles()
+    {
+        donutEffects.EjectSprinkles(sprinkles[0].transform);
+        sprinkles.Remove(sprinkles[0]);
     }
 
     private void Stayinvulnerable()
@@ -81,9 +101,17 @@ public class DonutMenager : MonoBehaviour
         }
     }
 
-    public void EjectSprinkles()
+    private void SpeedControll()
     {
-        donutEffects.EjectSprinkles(sprinkles[0].transform);
-        sprinkles.Remove(sprinkles[0]);
+        if (isBreaking)
+        {
+            if (donutRigidbody.velocity.x <= minimalSpeed)
+            {
+                donutMovement.ChangeMoveForce(speed);
+                return;
+            }
+
+            donutMovement.ChangeMoveForce(speed - slowForce);
+        }
     }
 }

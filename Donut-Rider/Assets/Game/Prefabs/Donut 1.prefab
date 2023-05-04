@@ -896,10 +896,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   friction: 0.1
-  speed: 0.5
+  speed: 0.1
   accelerationForce: 0.25
-  slowForce: 0.5
-  jumpForce: 0.5
+  slowForce: 2.5
+  jumpForce: 1
+  minimalSpeed: 5
   invulnerableTimeAfterDamage: 1
   sprinkles:
   - {fileID: 6172467466733809382}
