@@ -21,12 +21,12 @@ public class LevelSelectorManager : MonoBehaviour
         {
             var LevelInst = Instantiate(LevelPrefab, LevelContent.transform);
             var LevelIndex = i;
-            LevelInst.transform.Find("LevelPreview").GetComponent<Image>().sprite = LevelList[i].LevelPreview;
-            LevelInst.transform.Find("LevelName").GetComponent<TextMeshProUGUI>().text = LevelList[i].LevelName;
+            LevelInst.transform.Find("Preview").GetComponent<Image>().sprite = LevelList[i].LevelPreview;
+            LevelInst.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = LevelList[i].LevelName;
             LevelInst.transform.Find("DebugLevelID").GetComponent<TextMeshProUGUI>().text = LevelList[i].LevelID;
-            LevelInst.transform.Find("LevelHighScore").GetComponent<TextMeshProUGUI>().text = CheckLevelHighScore(i).ToString();
-            LevelInst.transform.Find("LevelComplete").GetComponent<Image>().sprite = CheckLevelCompleteSprite(i);
-            LevelInst.transform.Find("LevelButton").GetComponent<Button>().onClick.AddListener(() => LoadLevel(LevelIndex));
+            LevelInst.transform.Find("HighScore").GetComponent<TextMeshProUGUI>().text = CheckLevelHighScore(i).ToString();
+            LevelInst.transform.Find("IsComplete").GetComponent<Image>().sprite = CheckLevelCompleteSprite(i);
+            LevelInst.transform.Find("StartButton").GetComponent<Button>().onClick.AddListener(() => LoadLevel(LevelIndex));
             Debug.Log("CREATE");
         }
     }
