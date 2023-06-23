@@ -1,5 +1,3 @@
-using Mono.Cecil;
-using System;
 using UnityEngine;
 
 public class DonutController : MonoBehaviour
@@ -11,7 +9,6 @@ public class DonutController : MonoBehaviour
     [SerializeField] private float brakePower = 10f;
     [SerializeField] private Vector3 slowDownForce = new Vector3(0.8f, 0f, 0f);
     [SerializeField] private float jumpForce = 40f;
-    [SerializeField] private Vector3 ongoingJumpForce = new Vector3(0.4f, 0f, 0f);
     [SerializeField] private float bufferCheckDistance = 0.1f;
 
     private Vector3 constantForceBase;

@@ -42,4 +42,10 @@ public class InputController : MonoBehaviour
     {
         inputs[inputName].Enable();
     }
+
+    private void OnDisable()
+    {
+        playerControlInput.Disable();
+        inGameGeneralInput.Disable();
+    }
 }

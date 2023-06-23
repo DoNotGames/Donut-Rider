@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7619db8bef2fe1247bde1fbfc7b37a9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerPrefab: {fileID: 767792767194814745, guid: 9ddae12f61255e44282d4444014d60b3,
+  PlayerPrefab: {fileID: 767792767194814745, guid: 13eeb561bc08266478b22dad18318437,
     type: 3}
   GrayscaleFilterPrefab: {fileID: 8361899820281294384, guid: 1feb38a8124f365449530f3a4b17ce2f,
     type: 3}

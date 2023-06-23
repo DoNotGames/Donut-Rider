@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -14,6 +12,7 @@ public class PauseMenu : MonoBehaviour
 
     private GameObject pauseMenuContainer;
     private string currentSelectedMenuOption;
+    private SceneLoadMenager sceneLoadMenager;
 
     private void Awake()
     {
@@ -21,6 +20,11 @@ public class PauseMenu : MonoBehaviour
 
         if (pauseMenuContainer.activeSelf)
             pauseMenuContainer.SetActive(false);
+    }
+
+    private void Start()
+    {
+        sceneLoadMenager = GameObject.Find("SceneLoadMenager").GetComponent<SceneLoadMenager>();
     }
 
 #if UNITY_EDITOR
@@ -59,6 +63,7 @@ public class PauseMenu : MonoBehaviour
         {
             confirmWindow.SetActive(false);
             pauseMenuContainer.SetActive(false);
+            sceneLoadMenager.GoBackToMainMenu();
             Quit?.Invoke();
 #if UNITY_EDITOR
             Debug.Log("Quit Level");
@@ -68,6 +73,7 @@ public class PauseMenu : MonoBehaviour
 
         confirmWindow.SetActive(false);
         pauseMenuContainer.SetActive(false);
+        sceneLoadMenager.ResetScene();
         Reset?.Invoke();
 #if UNITY_EDITOR
         Debug.Log("Reset Level");

@@ -30,4 +30,9 @@ public class GameController : MonoBehaviour
         inputController.EnableInput("PlayerControlInput");
         pauseMenu.HideMenu();
     }
+
+    private void OnDisable()
+    {
+        Time.timeScale = startTimeScale;
+    }
 }

@@ -6,15 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Levels/Level0.unity
-    guid: d43bd1ef2227a254abc117bfe7cee75b
+    path: Assets/Scenes/MainMenu.unity
+    guid: 6b03917323069674c8c57eca25e6ce44
   - enabled: 1
-    path: Assets/Scenes/Levels/Level1.unity
-    guid: 66f497c412bfe3340957b29d4e18a7f7
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level2.unity
-    guid: af1cea1d3ce22f44a8cea37d5c912182
-  - enabled: 1
-    path: Assets/Scenes/DonutControllerTestScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/DonutTestScene.unity
+    guid: a728bcfd0282e9b408d7a8c432d33276
   m_configObjects: {}

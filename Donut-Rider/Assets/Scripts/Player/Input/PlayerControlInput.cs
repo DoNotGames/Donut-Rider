@@ -1,25 +1,33 @@
 public class PlayerControlInput : IInput
 {
     private PlayerInput input;
+    private DonutMenager currentDonutManager;
 
     public PlayerControlInput(PlayerInput newInput, DonutMenager donutMenager)
     {
         input = newInput;
-
-        input.Donut.Thrust.performed += ctx => donutMenager.Thrust();
-        input.Donut.Thrust.canceled += ctx => donutMenager.EndThrust();
-        input.Donut.Breake.performed += ctx => donutMenager.Brake();
-        input.Donut.Breake.canceled += ctx => donutMenager.EndBrake();
-        input.Donut.Jump.performed += ctx => donutMenager.Jump();
+        currentDonutManager = donutMenager;
     }
 
     public void Enable()
     {
         input.Donut.Enable();
+
+        input.Donut.Thrust.performed += ctx => currentDonutManager.Thrust();
+        input.Donut.Thrust.canceled += ctx => currentDonutManager.EndThrust();
+        input.Donut.Breake.performed += ctx => currentDonutManager.Brake();
+        input.Donut.Breake.canceled += ctx => currentDonutManager.EndBrake();
+        input.Donut.Jump.performed += ctx => currentDonutManager.Jump();
     }
 
     public void Disable()
     {
         input.Donut.Disable();
+
+        input.Donut.Thrust.performed -= ctx => currentDonutManager.Thrust();
+        input.Donut.Thrust.canceled -= ctx => currentDonutManager.EndThrust();
+        input.Donut.Breake.performed -= ctx => currentDonutManager.Brake();
+        input.Donut.Breake.canceled -= ctx => currentDonutManager.EndBrake();
+        input.Donut.Jump.performed -= ctx => currentDonutManager.Jump();
     }
 }
