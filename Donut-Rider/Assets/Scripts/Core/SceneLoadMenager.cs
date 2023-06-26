@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class SceneLoadMenager : MonoBehaviour
 {
-    [field: SerializeField] public List<string> levels { get; private set; }
-
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
-
     public void GoBackToMainMenu()
     {
         SceneManager.LoadScene("MainMenu");

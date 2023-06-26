@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 public class LevelSelectorManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class LevelSelectorManager : MonoBehaviour
     [SerializeField] private GameObject levelWindowContent;
     [SerializeField] private GameObject levelCardPrefab;
     [SerializeField] private Sprite levelCompleteSprite;
+    [SerializeField] private List<string> levels;
 
     private void Start()
     {
@@ -16,7 +18,7 @@ public class LevelSelectorManager : MonoBehaviour
 
     private void GenerateLevelsCards()
     {
-        foreach(string level in sceneLoadMenager.levels)
+        foreach(string level in levels)
         {
             GameObject levelInst = Instantiate(levelCardPrefab, levelWindowContent.transform);
             levelInst.transform.Find("Name").GetComponent<TMP_Text>().text = level;

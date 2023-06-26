@@ -15,7 +15,7 @@ public class InputController : MonoBehaviour
 
     private Dictionary<string, IInput> inputs;
 
-    private void Awake()
+    private void Start()
     {
         inputs = new Dictionary<string, IInput>();
 

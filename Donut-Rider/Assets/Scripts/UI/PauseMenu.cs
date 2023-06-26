@@ -7,6 +7,8 @@ public class PauseMenu : MonoBehaviour
     public Action Quit;
     public Action Reset;
 
+    [SerializeField] private TMP_Text windowText;
+
     [SerializeField] private GameObject confirmWindow;
     [SerializeField] private TMP_Text confirmWindowText;
 
@@ -27,26 +29,30 @@ public class PauseMenu : MonoBehaviour
         sceneLoadMenager = GameObject.Find("SceneLoadMenager").GetComponent<SceneLoadMenager>();
     }
 
-#if UNITY_EDITOR
-    [ContextMenu("Show")]
-#endif
-    public void ShowMenu()
+    public void ShowMenu(bool endPanel = false, float time = 0f, int lifes = 0)
     {
         pauseMenuContainer.SetActive(true);
+        if (endPanel)
+        {
+            windowText.text = $"Time: {time}  Lifes: {lifes}";
+            return;
+        }
+
+        windowText.text = "Paused";
     }
 
-#if UNITY_EDITOR
-    [ContextMenu("Hide")]
-#endif
     public void HideMenu()
     {
         pauseMenuContainer.SetActive(false);
+        confirmWindow.SetActive(false);
+        windowText.gameObject.SetActive(true);
     }
 
     public void Selection(string menuOption)
     {
         currentSelectedMenuOption = menuOption;
         confirmWindow.SetActive(true);
+        windowText.gameObject.SetActive(false);
 
         if(currentSelectedMenuOption == "Quit")
         {
@@ -59,29 +65,24 @@ public class PauseMenu : MonoBehaviour
 
     public void ConfirmSelection()
     {
-        if(currentSelectedMenuOption == "Quit")
+        confirmWindow.SetActive(false);
+        pauseMenuContainer.SetActive(false);
+        windowText.gameObject.SetActive(true);
+
+        if (currentSelectedMenuOption == "Quit")
         {
-            confirmWindow.SetActive(false);
-            pauseMenuContainer.SetActive(false);
             sceneLoadMenager.GoBackToMainMenu();
             Quit?.Invoke();
-#if UNITY_EDITOR
-            Debug.Log("Quit Level");
-#endif
             return;
         }
 
-        confirmWindow.SetActive(false);
-        pauseMenuContainer.SetActive(false);
         sceneLoadMenager.ResetScene();
         Reset?.Invoke();
-#if UNITY_EDITOR
-        Debug.Log("Reset Level");
-#endif
     }
 
     public void CancelSelection()
     {
         confirmWindow.SetActive(false);
+        windowText.gameObject.SetActive(true);
     }
 }

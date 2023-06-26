@@ -114,4 +114,9 @@ public class DonutMenager : MonoBehaviour
             donutMovement.ChangeMoveForce(speed - slowForce);
         }
     }
+
+    private void OnDeath()
+    {
+
+    }
 }

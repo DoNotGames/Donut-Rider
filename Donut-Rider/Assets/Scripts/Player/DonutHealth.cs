@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 
 public class DonutHealth
 {
     private int hp;
-    private int currentHP;
+    public int currentHP { get; private set; }
+
+    public Action PlayerDeath;
 
     private DonutMenager donutMenager;
 
@@ -25,7 +28,7 @@ public class DonutHealth
 
         if (currentHP == 0)
         {
-            Debug.Log("i'm dead");
+            PlayerDeath?.Invoke();
         }
     }
 }

@@ -12,10 +12,10 @@ public class StartPrefab : MonoBehaviour
     }
     private void OnEnable()
     {
-        SpawnPlayer(gameObject.transform.position, PlayerPrefab);
+        SpawnPlayer(gameObject.transform.position);
     }
 
-    public void SpawnPlayer(Vector3 spawnPos, GameObject playerPrefab)
+    public void SpawnPlayer(Vector3 spawnPos)
     {
         var Player = Instantiate(PlayerPrefab, spawnPos, Quaternion.identity);
 

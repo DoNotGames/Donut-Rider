@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class MetaPrefab : MonoBehaviour
 {
     public GameObject EndEffects;
-    public delegate void EndGame();
-    public static event EndGame EndGameByMetaEvent;
+    public Action EndGameByMetaEvent;
 
 
     private void Awake()
@@ -28,7 +26,6 @@ public class MetaPrefab : MonoBehaviour
         int currLvlIndex = PlayerPrefs.GetInt("NextLevelUnlockIndex");
         PlayerPrefs.SetInt("NextLevelUnlockIndex", currLvlIndex + 1);
         StartEndEffect();
-       //ameStatus.CurrentGameStatus = GameStatus.CurrentGameStatus.Play;
         player.SetActive(false);
     }
 
