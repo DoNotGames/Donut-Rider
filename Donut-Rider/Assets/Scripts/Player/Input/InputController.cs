@@ -9,7 +9,6 @@ public class InputController : MonoBehaviour
     private DonutMenager donutController;
 
     private PlayerInput playerInput;
-    private GlobalInput globalInput;
     private InGameGeneralInput inGameGeneralInput;
     private PlayerControlInput playerControlInput;
 
@@ -20,7 +19,6 @@ public class InputController : MonoBehaviour
         inputs = new Dictionary<string, IInput>();
 
         playerInput = new PlayerInput();
-        globalInput = new GlobalInput(playerInput, gameController);
         inGameGeneralInput = new InGameGeneralInput(playerInput, gameController);
         inputs.Add("InGameGeneralInput", inGameGeneralInput);
 
@@ -28,7 +26,6 @@ public class InputController : MonoBehaviour
         playerControlInput = new PlayerControlInput(playerInput, donutController);
         inputs.Add("PlayerControlInput", playerControlInput);
 
-        //globalInput.Enable();
         playerControlInput.Enable();
         inGameGeneralInput.Enable();
     }
