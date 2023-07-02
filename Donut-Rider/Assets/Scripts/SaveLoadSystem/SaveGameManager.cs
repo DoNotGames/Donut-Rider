@@ -3,42 +3,46 @@ using UnityEngine;
 
 public static class SaveGameManager 
 {
-    public static LevelsData levelsData = new LevelsData();
     public const string directory = "/SaveData/";
-    public const string fileName = "SaveGame.sav";
-    
-    public static bool SaveGame()
+
+    public static LevelData levelData = new LevelData();
+    public static bool SaveGame(string levelName, bool isUnlocked, float time, int health)
     {
-        var dir = Application.persistentDataPath + directory;
+        var dir = Application.persistentDataPath + directory + levelName + ".sav";
 
         if (!Directory.Exists(dir))
         {
             Directory.CreateDirectory(dir);
         }
 
-        string json = JsonUtility.ToJson(levelsData, true);
-        File.WriteAllText(dir + fileName, json);
+        levelData.levelName = levelName;
+        levelData.isUnlocked = isUnlocked;
+        levelData.time = time;
+        levelData.health = health;
+
+        string json = JsonUtility.ToJson(levelData, true);
+        File.WriteAllText(dir + levelName + ".sav", json);
 
         GUIUtility.systemCopyBuffer = dir;
         return true;
     }
 
-    public static void LoadGame()
+    public static void LoadGame(string levelName)
     {
-        string fullPath = Application.persistentDataPath + directory + fileName;
+        string fullPath = Application.persistentDataPath + directory + levelName + ".sav";
 
-        LevelsData tempData = new LevelsData();
+        LevelData tempData = new LevelData();
 
         if (File.Exists(fullPath))
         {
             string json = File.ReadAllText(fullPath);
-            tempData = JsonUtility.FromJson<LevelsData>(json);
+            tempData = JsonUtility.FromJson<LevelData>(json);
         }
         else
         {
             Debug.LogError("Save file does not exist!");
         }
 
-        levelsData = tempData;
+        levelData = tempData;
     }
 }
