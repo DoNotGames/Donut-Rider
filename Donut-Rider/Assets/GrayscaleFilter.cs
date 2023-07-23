@@ -5,6 +5,7 @@ using UnityEngine;
 public class GrayscaleFilter : MonoBehaviour
 {
     [SerializeField] RectTransform rectTransform;
+    //[SerializeField] float speed = 7f;
 
     private GameObject _gameObjectToUse;
 
@@ -27,6 +28,13 @@ public class GrayscaleFilter : MonoBehaviour
     private void LateUpdate()
     {
         Vector3 viewportLocation = Camera.main.WorldToViewportPoint(_gameObjectToUse.transform.position);
+
+        Vector2 target = new Vector2(viewportLocation.x * Screen.width, rectTransform.offsetMin.y);
+        //Vector2 distance = target - rectTransform.offsetMin;
+        //Vector2 deltaMove = distance * Mathf.Clamp(speed * Time.deltaTime, 0f, 1f);
+
+        //rectTransform.offsetMin += deltaMove;
+
         rectTransform.offsetMin = new Vector2(viewportLocation.x * Screen.width, rectTransform.offsetMin.y);
     }
 }
